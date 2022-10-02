@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAgentsTable extends Migration
+class CreatePaymentDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateAgentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('agents', function (Blueprint $table) {
+        Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('status')->default('1');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamp('email_verified_at')->nullable(); 
+            $table->unsignedBigInteger('agent_id');
+            $table->unsignedBigInteger('bank_id');
+            $table->string('account_number');
+            $table->string('Mobile_banking');
+            $table->string('banking_mobile_number');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateAgentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agents');
+        Schema::dropIfExists('payment_details');
     }
 }

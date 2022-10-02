@@ -1,3 +1,4 @@
+php artisan serve
 @extends('layouts.back-end.app')
 
 @push('css_or_js')
@@ -56,6 +57,10 @@
                                             <th scope="col">Division</th>
                                             <th scope="col">Present Address</th>
                                             <th scope="col">Permanent Address</th>
+                                            <th scope="col">Bank Name</th>
+                                            <th scope="col">Account Number</th>
+                                            <th scope="col">Mobile Banking</th>
+                                            <th scope="col">Banking Mobile Number</th>
                                             <th scope="col">Active Status</th>
                                             <th scope="col" style="width: 100px" class="text-center">
                                                 Action
@@ -65,18 +70,22 @@
                                     <tbody>
                                         <tr v-for="(item, index) in lists" :key="item.id">
                                             <td>@{{ index + 1 }}</td>
-                                            <td> <img style="width:80px;heigth:80px;" v-bind:src="'/images/' +item.image"
+                                            <td> <img style="width:80px;heigth:80px;" v-bind:src="'/images/' +item.agent_info.image"
                                                     class="img-thumbnail rounded-circle" /> </td>
-                                            <td>@{{ item.agent_id }}</td>
+                                            <td>@{{ item.agent_info.agent_Autostring_id }}</td>
                                             <td>@{{ item.name }}</td>
-                                            <td>@{{ item.registration_date }}</td>
+                                            <td>@{{ item.agent_info.registration_date }}</td>
                                             <td>@{{ item.email }}</td>
-                                            <td>@{{ item.mobileNumber1 }}</td>
-                                            <td>@{{ item.mobileNumber2 }}</td>
-                                            <td>@{{ item.agent_zone_area }}</td>
-                                            <td>@{{ item.agent_division }}</td>
-                                            <td>@{{ item.present_address }}</td>
-                                            <td>@{{ item.permanent_address }}</td>
+                                            <td>@{{ item.agent_info.mobileNumber1 }}</td>
+                                            <td>@{{ item.agent_info.mobileNumber2 }}</td>
+                                            <td>@{{ item.agent_info.agent_zone_area }}</td>
+                                            <td>@{{ item.agent_info.agent_division }}</td>
+                                            <td>@{{ item.agent_info.present_address }}</td>
+                                            <td>@{{ item.agent_info.permanent_address }}</td>
+                                            <td>@{{ item.payment_details.bank_name.full_name }}</td>
+                                            <td>@{{ item.payment_details.account_number }}</td>
+                                            <td>@{{ item.payment_details.Mobile_banking }}</td>
+                                            <td>@{{ item.payment_details.banking_mobile_number }}</td>
 
                                             <td>
                                                 <label class="switch switch-status">
@@ -140,11 +149,7 @@
                                 </div>
                             </div>
                             <div class="row mt-4">
-                                <div class="col">
-                                    <label for="agent_id">Agent ID</label>
-                                    <input type="text" class="form-control mt-2" id="agent_id"
-                                        v-model="form.agent_id" placeholder="# AG123" />
-                                </div>
+                               
                                 <div class="col">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control mt-2" id="name"
@@ -199,9 +204,12 @@
                             <div class="row mt-4">
                                 <strong>Payment Details:</strong>
                                 <div class="col">
-                                    <label for="bank_details" class="mt-2">Bank Details</label>
-                                    <input type="text" class="form-control mt-2" id="bank_details"
-                                        v-model="form.bank_details" placeholder="Bank Details" />
+                                    <label for="bank_details" class="mt-2">Bank Name</label>
+                                    <select v-model="form.bank_id" id="" class="form-control  mt-2">
+                                        <option value="" selected disabled>Select Bank</option>
+                                        <option v-for="item in bank" :value="item.id">@{{ item.full_name }}
+                                        </option>
+                                    </select>
                                 </div>
                                 <div class="col">
                                     <label for="account_number" class="mt-2">Account Number</label>
@@ -248,7 +256,7 @@
         {{-- addAgent model End --}}
 
         {{-- edit Agent model Start --}}
-        <div class="modal fade fadeEdit " id="editAgent" tabindex="-1" aria-labelledby="exampleModalLabel"
+         <div class="modal fade fadeEdit " id="editAgent" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -268,8 +276,8 @@
                                 <div class="col">
                                     <img class="img-thumbnail rounded-circle"
                                         style="width:100px; heigth:100px;" id="outputEdit" />
-                                </div>
-                                {{-- <div class="col"></div>
+                                </div> 
+                                <div class="col"></div>
                                 <div class="col"> </div>
                                
                              
@@ -368,7 +376,7 @@
                                         v-model="form.password" placeholder="Password" />
                                 </div>
                                 <div class="col-3"></div>
-                                <div class="col-3"></div> --}}
+                                <div class="col-3"></div> 
 
                             </div>
                             <div class="form-group mt-3">
@@ -401,6 +409,7 @@
                     lists: [],
                     districts: [],
                     divisions: [],
+                    bank: [],
                     errors: [],
                     form: {
                         id: "",
@@ -414,7 +423,7 @@
                         agent_division: "",
                         present_address: "",
                         permanent_address: "",
-                        bank_details: "",
+                        bank_id: "",
                         account_number: "",
                         Mobile_banking: "",
                         banking_mobile_number: "",
@@ -429,10 +438,13 @@
                     view() {
                         axios.get("/agent/getData")
                             .then(response => {
-                                console.log(response.data.agent);
                                 this.lists = response.data.agent;
                                 this.districts = response.data.districts;
                                 this.divisions = response.data.divisions;
+                                this.bank = response.data.bank;
+                                
+                                // console.log(this.lists);
+                           
 
 
                             });
@@ -605,7 +617,7 @@
 
                 },
                 mounted() {
-                    this.view()
+                    this.view();
                 }
             })
 
