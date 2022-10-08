@@ -359,18 +359,6 @@
                     }
                 });
             })
-            $('#searchBtn').on('click',function(){
-                // var s = document.getElementById("#searchi")
-                $value=$(this).val();
-                $.ajax({
-                    type : 'get',
-                    url : '{{URL::to('data-search')}}',
-                    data:{'search':$value},
-                    success:function(data){
-                        $('tbody').html(data);
-                    }
-                });
-            })
 
 
             $(".deleteBtn").click(function (){
