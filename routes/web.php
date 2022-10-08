@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BankController;
 
 
 /*
@@ -31,3 +32,12 @@ Route::prefix('agent')->group(function () {
     Route::get('/remove/{agent_id}',[AgentController::class,'removeAgent']);
 
 });
+
+/// Bank
+Route::get('/bank-list',[BankController::class, 'index'])->name('bank.list');
+Route::post('/bank-details-store/',[BankController::class, 'store'])->name('bank.details.store');
+Route::get('/bank-details-show/',[BankController::class, 'show'])->name('bank.details.show');
+Route::delete('/bank-details-delete/{id}',[BankController::class, 'destroy'])->name('bank.details.destroy');
+Route::get('/bank-details-edit/{id}',[BankController::class, 'edit'])->name('bank.details.edit');
+Route::put('/bank-details-update/{id}',[BankController::class, 'update'])->name('bank.details.update');
+Route::get('/data-search',[BankController::class, 'search'])->name('data.search');
