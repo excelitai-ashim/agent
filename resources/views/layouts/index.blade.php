@@ -2,6 +2,9 @@
 @push('css_or_js')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
+@section('title')
+    Agent -Dashboard
+@endsection
 @section('content')
 <div style="margin-left: 10px;">
     <div class="card-body">

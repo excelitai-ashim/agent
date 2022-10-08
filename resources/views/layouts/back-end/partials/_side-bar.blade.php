@@ -90,6 +90,17 @@
 
                                 <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
 
+                                <a href="{{ route('bank.list') }}"><i class="tio-home-vs-1-outlined nav-icon"></i> <strong>Bank</strong> </a>
+
+                                </span>
+                            </a>
+                        </li>
+                        <li class="navbar-vertical-aside-has-menu">
+                            <a class="js-navbar-vertical-aside-menu-link nav-link"
+                               href="#">
+
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+
                                 <a href="{{ route('dashboard') }}"><i class="tio-home-vs-1-outlined nav-icon"></i> <strong>Agent Sale Report</strong> </a>
 
                                 </span>

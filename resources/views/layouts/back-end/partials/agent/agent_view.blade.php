@@ -9,6 +9,10 @@ php artisan serve
         min-width: max-content;
     }
 </style>
+@section('title')
+    Agent -Page
+@endsection
+
 @section('content')
     <div class="content-wrapper" id="app">
         <div class="container-fluid">
@@ -138,8 +142,7 @@ php artisan serve
 
                                 </div>
                                 <div class="col">
-                                    <img class="img-thumbnail rounded-circle"
-                                        style="width:100px; heigth:100px;" id="output" />
+                                    <img class="img-thumbnail rounded-circle" style="width:100px; heigth:100px;" id="output" />
                                 </div>
                                 <div class="col"></div>
                                 <div class="col">
@@ -149,7 +152,7 @@ php artisan serve
                                 </div>
                             </div>
                             <div class="row mt-4">
-                               
+
                                 <div class="col">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control mt-2" id="name"
@@ -276,11 +279,11 @@ php artisan serve
                                 <div class="col">
                                     <img class="img-thumbnail rounded-circle"
                                         style="width:100px; heigth:100px;" id="outputEdit" />
-                                </div> 
+                                </div>
                                 <div class="col"></div>
                                 <div class="col"> </div>
-                               
-                             
+
+
                             </div>
                             <div class="row mt-4">
                                 <div class="col">
@@ -376,7 +379,7 @@ php artisan serve
                                         v-model="form.password" placeholder="Password" />
                                 </div>
                                 <div class="col-3"></div>
-                                <div class="col-3"></div> 
+                                <div class="col-3"></div>
 
                             </div>
                             <div class="form-group mt-3">
@@ -434,7 +437,6 @@ php artisan serve
                 },
                 methods: {
 
-
                     view() {
                         axios.get("/agent/getData")
                             .then(response => {
@@ -442,9 +444,9 @@ php artisan serve
                                 this.districts = response.data.districts;
                                 this.divisions = response.data.divisions;
                                 this.bank = response.data.bank;
-                                
+
                                 // console.log(this.lists);
-                           
+
 
 
                             });
@@ -453,7 +455,7 @@ php artisan serve
                         this.form.image = e.target.files[0];
                     },
                     onImageUpdate(e) {
-                       
+
                      this.form.image = e.target.files[0];
                     this.form.image = this.current.image;
                     console.log( this.form.image);
@@ -643,7 +645,7 @@ php artisan serve
                 $(".fadeEdit").hide(2000);
             });
 
-         
+
             // ===========edit from data===============
         </script>
         <Script>

@@ -169,8 +169,6 @@
 
 
     </style>
-    <script
-        src="{{asset('assets/back-end')}}/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js"></script>
     <link rel="stylesheet" href="{{asset('assets/back-end')}}/css/toastr.css">
 </head>
 
@@ -331,8 +329,7 @@
         }
     }
 </script>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" 
-integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -341,6 +338,7 @@ integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="ano
 @stack('script')
 
 <script src="{{asset('assets/back-end')}}/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 {{-- light box --}}
 <script src="{{asset('js/lightbox.min.js')}}"></script>
 <audio id="myAudio">
