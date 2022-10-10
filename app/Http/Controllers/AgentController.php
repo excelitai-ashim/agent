@@ -18,11 +18,11 @@ class AgentController extends Controller
         // return view('layouts.back-end.partials.agent.agent_view');
         return view('layouts.index');
     }
-    public function agentViewPage(){ 
+    public function agentViewPage(){
         // $agent = Agent::with('agentInfo','paymentDetails')->OrderBy('id','desc')->get();
         // dd($agent);
-        return view('layouts.back-end.partials.agent.agent_view'); 
-        
+        return view('layouts.back-end.partials.agent.agent_view');
+
     }
 
     public function agentgetData(){
@@ -35,7 +35,7 @@ class AgentController extends Controller
          'districts'=> $districts,'divisions'=> $divisions,'bank'=> $bank]);
 }
 
-   
+
 
      function generateRandomString($length = 6)
     {
@@ -49,11 +49,11 @@ class AgentController extends Controller
             $randomString;
     }
       public function storeAgent(Request $request){
-    
+
         //dd($request->all());
 
         $file = $request->file('image');
-       
+
         $filename = '';
         if ($file) {
             $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -61,7 +61,7 @@ class AgentController extends Controller
         } else {
             $filename = '';
         }
-         
+
         //     $request->validate([
         //         'image' =>'required',
         //         'registration_date' => 'required',
@@ -82,18 +82,18 @@ class AgentController extends Controller
         //         'password' =>'required',
 
         //   ]);
-      
-     
+
+
           $Agent=Agent::create([
             // 'name' => "dddddddddddddddddddd",
             // 'email' => "dddddddddddddd@gmail.com",
-          
+
              'name' => $request->name,
             'email' => $request->email,
             'password' =>Hash::make($request->password),
-       
+
         ]);
-        
+
           $AgentInfo=AgentInfo::create([
             'agent_id' => $Agent->id,
             'image' =>$filename,
@@ -105,30 +105,30 @@ class AgentController extends Controller
             'agent_division' => $request->agent_division,
             'present_address' => $request->present_address,
             'permanent_address' => $request->permanent_address,
-           
+
 
         ]);
-    
+
         $PaymentDetails=PaymentDetails::create([
             'agent_id' =>$Agent->id,
-            'bank_id' => $request->bank_id,
+            'bank_id' => $request->bank_name,
             'account_number' => $request->account_number,
             'Mobile_banking' => $request->Mobile_banking,
             'banking_mobile_number' => $request->banking_mobile_number,
 
         ]);
-        
+
           return response()->json([
             'Agent' => $Agent,
             'AgentInfo' => $AgentInfo,
             'PaymentDetails' => $PaymentDetails
         ]);
       }
-  
+
       public function edit($agent_id){
         //   $agent = Agent::find($agent_id);
           $agent = Agent::where('id',$agent_id)->with('agent_info','payment_details','payment_details.bank_name')->OrderBy('id','desc')->first();
-        
+
           if(!$agent){
               return response()->json(['error'=>"Agent not found"]);
           }
@@ -145,12 +145,12 @@ class AgentController extends Controller
        Agent::where('id', $agent_id)->delete();
        PaymentDetails::where('agent_id', $agent_id)->delete();
 
-       
-    
-        
+
+
+
         return response("Successfully Deleted");
-         
-         
+
+
       }
       public function validateStatus()
       {
@@ -173,7 +173,7 @@ class AgentController extends Controller
             $filename = $request->image;
         }
 
-      
+
         $agentData = [
             'image' => $filename ,
             'agent_id' => $request->agent_id,
@@ -189,7 +189,7 @@ class AgentController extends Controller
             'Mobile_banking' => $request->Mobile_banking,
             'banking_mobile_number' => $request->banking_mobile_number,
             'email' => $request->email,
-            
+
         ];
 
         $agent->update($agentData);
@@ -197,5 +197,5 @@ class AgentController extends Controller
             'status' => 200,
             'message' => "Agent data updated successfully!"
         ]);
-      }  
+      }
 }

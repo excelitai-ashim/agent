@@ -40,7 +40,7 @@ php artisan serve
                                 Add Agent
                             </a>  --}}
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addAgent"> Add
-                                Agent</button>
+                                Customer</button>
 
                         </div>
                         <div class="card-body" style="padding: 0">
@@ -50,22 +50,12 @@ php artisan serve
                                     <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Sl</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Agent ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Registration Date</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Mobile Number 1</th>
-                                        <th scope="col">Mobile Number 2</th>
+                                        <th scope="col">Customer Name</th>
                                         <th scope="col">Zone/Area</th>
                                         <th scope="col">Division</th>
-                                        <th scope="col">Present Address</th>
-                                        <th scope="col">Permanent Address</th>
-                                        <th scope="col">Bank Name</th>
-                                        <th scope="col">Account Number</th>
-                                        <th scope="col">Mobile Banking</th>
-                                        <th scope="col">Banking Mobile Number</th>
-                                        <th scope="col">Active Status</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Mobile Number</th>
+                                        <th scope="col">Customer Address</th>
                                         <th scope="col" style="width: 100px" class="text-center">
                                             Action
                                         </th>
