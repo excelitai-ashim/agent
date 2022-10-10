@@ -25,7 +25,7 @@ Route::get('/', [AgentController::class, 'index'])->name('dashboard');
 
 Route::get('/agent_list',[AgentController::class,'agentViewPage'])->name('agent_list');
 Route::prefix('agent')->group(function () {
-    Route::post('/store_data',[AgentController::class,'storeAgent']);
+    Route::post('/store_agent_data',[AgentController::class,'storeAgent']);
     Route::get('/getData',[AgentController::class,'agentgetData']);
     Route::get('/edit/{agent_id}',[AgentController::class,'edit'])->name('customer.edit');
     Route::post('/update/{agent_id}',[AgentController::class,'update']);

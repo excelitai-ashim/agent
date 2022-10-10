@@ -7,8 +7,8 @@
         min-width: max-content;
     }
 </style>
-<link href="{{asset('assets/back-end/css/bootstrap.min.css')}}" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+{{-- <link href="{{asset('assets/back-end/css/bootstrap.min.css')}}" rel="stylesheet"> --}}
+{{-- <script src="https://code.jquery.com/jquery-3.6.1.js"></script> --}}
 @php
     $q   = isset($_GET['q']) ? $_GET['q'] : null;
 @endphp

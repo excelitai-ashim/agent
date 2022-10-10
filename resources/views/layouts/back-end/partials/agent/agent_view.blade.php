@@ -132,7 +132,7 @@ php artisan serve
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="saveAgent()">
+                        <form id="saveForm" @submit.prevent="saveAgent()" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col">
@@ -208,7 +208,7 @@ php artisan serve
                                 <strong>Payment Details:</strong>
                                 <div class="col">
                                     <label for="bank_details" class="mt-2">Bank Name</label>
-                                    <select v-model="form.bank_id" id="" class="form-control  mt-2">
+                                    <select v-model="form.bank_name" id="" class="form-control  mt-2">
                                         <option value="" selected disabled>Select Bank</option>
                                         <option v-for="item in bank" :value="item.id">@{{ item.full_name }}
                                         </option>
@@ -289,7 +289,7 @@ php artisan serve
                                 <div class="col">
                                     <label for="agent_id">Agent ID</label>
                                     <input type="text" class="form-control mt-2" id="agent_id"
-                                        v-model="form.agent_id" placeholder="# AG123" />
+                                        v-model="form.agent_id" placeholder="# AG123"  readonly/>
                                 </div>
                                 <div class="col">
                                     <label for="name">Name</label>
@@ -345,9 +345,9 @@ php artisan serve
                             <div class="row mt-4">
                                 <strong>Payment Details:</strong>
                                 <div class="col">
-                                    <label for="bank_details" class="mt-2">Bank Details</label>
+                                    <label for="bank_details" class="mt-2">Bank Name</label>
                                     <input type="text" class="form-control mt-2" id="bank_details"
-                                        v-model="form.bank_details" placeholder="Bank Details" />
+                                        v-model="form.bank_name" placeholder="Bank Details" />
                                 </div>
                                 <div class="col">
                                     <label for="account_number" class="mt-2">Account Number</label>
@@ -416,7 +416,7 @@ php artisan serve
                     errors: [],
                     form: {
                         id: "",
-                        image: "",
+                         image: "",
                         registration_date: "",
                         agent_id: "",
                         name: "",
@@ -426,7 +426,7 @@ php artisan serve
                         agent_division: "",
                         present_address: "",
                         permanent_address: "",
-                        bank_id: "",
+                        bank_name: "",
                         account_number: "",
                         Mobile_banking: "",
                         banking_mobile_number: "",
@@ -440,39 +440,28 @@ php artisan serve
                     view() {
                         axios.get("/agent/getData")
                             .then(response => {
+                                // console.log(response);
                                 this.lists = response.data.agent;
                                 this.districts = response.data.districts;
                                 this.divisions = response.data.divisions;
                                 this.bank = response.data.bank;
-
-                                // console.log(this.lists);
-
-
-
                             });
                     },
                     onImageChange(e) {
                         this.form.image = e.target.files[0];
                     },
                     onImageUpdate(e) {
-
-                     this.form.image = e.target.files[0];
-                    this.form.image = this.current.image;
-                    console.log( this.form.image);
-
+                        this.form.image = e.target.files[0];
+                        this.form.image = this.current.image;
                 },
                     saveAgent() {
-                        const config = {
-                            headers: {
-                                'content-type': 'multipart/form-data'
-                            }
-                        }
+                        var formData = new FormData();
+                        Object.entries(this.form).forEach(([key, value]) => {
+                            formData.append(key, value);
+                        });
 
-                        // this.cleanError();
-                        // this.checkForm();
-                        // if(this.errors.length === 0) {
                         axios
-                            .post("/agent/store_data/", this.form, config)
+                            .post("/agent/store_agent_data/",formData )
                             .then(() => {
                                 Swal.fire({
                                     position: 'top-end',
@@ -487,25 +476,6 @@ php artisan serve
                         // }
                     },
 
-                    id: "",
-                    image: "",
-                    registration_date: "",
-                    agent_id: "",
-                    name: "",
-                    mobileNumber1: "",
-                    mobileNumber2: "",
-                    agent_zone_area: "",
-                    agent_division: "",
-                    present_address: "",
-                    permanent_address: "",
-                    bank_details: "",
-                    account_number: "",
-                    Mobile_banking: "",
-                    banking_mobile_number: "",
-                    email: "",
-                    password: "",
-
-
                     edit(agent_id) {
                         const config = {
                             headers: {
@@ -515,35 +485,34 @@ php artisan serve
                         axios.get(`/agent/edit/${agent_id}`)
                             .then(response => {
                                 agent = response.data.agent;
-                                this.form.id = agent.id
-                                this.form.image = agent.image
-                                this.form.registration_date = agent.registration_date
-                                this.form.agent_id = agent.agent_id
-                                this.form.name = agent.name
-                                this.form.mobileNumber1 = agent.mobileNumber1
-                                this.form.mobileNumber2 = agent.mobileNumber2
-                                this.form.agent_zone_area = agent.agent_zone_area;
-                                this.form.agent_division = agent.agent_division
-                                this.form.present_address = agent.present_address
-                                this.form.permanent_address = agent.permanent_address
-                                this.form.bank_details = agent.bank_details
-                                this.form.account_number = agent.account_number
-                                this.form.Mobile_banking = agent.Mobile_banking
-                                this.form.banking_mobile_number = agent.banking_mobile_number
+                                this.form.id = agent.id;
+                                this.form.image = agent.image;
+                                this.form.registration_date = agent.agent_info.registration_date;
+                                this.form.agent_id = agent.agent_id;
+                                this.form.mobileNumber1 = agent.agent_info.mobileNumber1;
+                                this.form.mobileNumber2 = agent.agent_info.mobileNumber2;
+                                this.form.agent_zone_area = agent.agent_info.agent_zone_area;
+                                this.form.agent_division = agent.agent_info.agent_division;
+                                this.form.present_address = agent.agent_info.present_address;
+                                this.form.permanent_address = agent.agent_info.permanent_address;
+                                this.form.bank_name = agent.payment_details.bank_name.full_name;
+                                this.form.account_number = agent.payment_details.account_number;
+                                this.form.Mobile_banking = agent.payment_details.Mobile_banking;
+                                this.form.banking_mobile_number = agent.payment_details.banking_mobile_number;
+                                this.form.name = agent.name;
                                 this.form.email = agent.email;
                                 this.form.password = agent.password;
                             });
                     },
                                  updateAgent(agent_id){
-                                    const config = {
-                            headers: {
-                                'content-type': 'multipart/form-data'
-                                    }
-                                    }
+                                    var formData = new FormData();
+                                    Object.entries(this.form).forEach(([key, value]) => {
+                                    formData.append(key, value);
+                                     });
                                     axios
-                                    .post(`/agent/update/${agent_id}`,this.form,config)
+                                    .post(`/agent/update/${agent_id}`,tformData)
                                     .then(response=>{
-                                        // this.view();
+                                         this.view();
 
                                         let listData=this.form;
 

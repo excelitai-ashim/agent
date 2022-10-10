@@ -50,8 +50,10 @@ class AgentController extends Controller
     }
       public function storeAgent(Request $request){
     
+        //dd($request->all());
 
         $file = $request->file('image');
+       
         $filename = '';
         if ($file) {
             $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -83,13 +85,14 @@ class AgentController extends Controller
       
      
           $Agent=Agent::create([
+            // 'name' => "dddddddddddddddddddd",
+            // 'email' => "dddddddddddddd@gmail.com",
           
-            'name' => $request->name,
+             'name' => $request->name,
             'email' => $request->email,
             'password' =>Hash::make($request->password),
-         
+       
         ]);
-
         
           $AgentInfo=AgentInfo::create([
             'agent_id' => $Agent->id,
@@ -123,7 +126,9 @@ class AgentController extends Controller
       }
   
       public function edit($agent_id){
-          $agent = Agent::find($agent_id);
+        //   $agent = Agent::find($agent_id);
+          $agent = Agent::where('id',$agent_id)->with('agent_info','payment_details','payment_details.bank_name')->OrderBy('id','desc')->first();
+        
           if(!$agent){
               return response()->json(['error'=>"Agent not found"]);
           }
@@ -154,6 +159,7 @@ class AgentController extends Controller
           ]);
       }
       public function update(Request $request, $agent_id){
+        dd($request->all());
         $filename = '';
         $agent = Agent::find($agent_id);
         if ($request->hasFile('image')) {

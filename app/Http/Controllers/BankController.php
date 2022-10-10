@@ -17,39 +17,39 @@ class BankController extends Controller
     }
 
 
-    public function search(Request $request)
-    {
-        if($request->ajax()) {
-            $output="";
-            $banks=DB::table('banks')
-                ->where('short_name','LIKE','%'.$request->search."%")
-                ->Orwhere('full_name','LIKE','%'.$request->search."%")
-                ->Orwhere('code','LIKE','%'.$request->search."%")
-                ->Orwhere('routing_number','LIKE','%'.$request->search."%")->get();
-            if($banks) {
-                foreach ($banks as $key => $bank) {
-                    $output.='<tr>'.
-                        '<td>'.$bank->id.'</td>'.
-                        '<td>'.$bank->short_name.'</td>'.
-                        '<td>'.$bank->full_name.'</td>'.
-                        '<td>'.$bank->code.'</td>'.
-                        '<td>'.$bank->routing_number.'</td>'.
-                        '<td>'.'<button @click.prevent="editData(item.id)" type="button"
-                                                    class="btn btn-primary btn-sm" data-toggle="modal"
-                                                    data-target="#editModal">
-                                                <i class="tio-edit"></i> Edit</button>
+    // public function search(Request $request)
+    // {
+    //     if($request->ajax()) {
+    //         $output="";
+    //         $banks=DB::table('banks')
+    //             ->where('short_name','LIKE','%'.$request->search."%")
+    //             ->Orwhere('full_name','LIKE','%'.$request->search."%")
+    //             ->Orwhere('code','LIKE','%'.$request->search."%")
+    //             ->Orwhere('routing_number','LIKE','%'.$request->search."%")->get();
+    //         if($banks) {
+    //             foreach ($banks as $key => $bank) {
+    //                 $output.='<tr>'.
+    //                     '<td>'.$bank->id.'</td>'.
+    //                     '<td>'.$bank->short_name.'</td>'.
+    //                     '<td>'.$bank->full_name.'</td>'.
+    //                     '<td>'.$bank->code.'</td>'.
+    //                     '<td>'.$bank->routing_number.'</td>'.
+    //                     '<td>'.'<button @click.prevent="editData(item.id)" type="button"
+    //                                                 class="btn btn-primary btn-sm" data-toggle="modal"
+    //                                                 data-target="#editModal">
+    //                                             <i class="tio-edit"></i> Edit</button>
 
-                                            <button deleteData(id)
-                                                    class="btn btn-danger btn-sm delete">
-                                                <i class="tio-add-to-trash"></i>
-                                                delete
-                                </button>'.'</td>'.
-                        '</tr>';
-                }
-                return Response($output);
-            }
-        }
-    }
+    //                                         <button deleteData(id)
+    //                                                 class="btn btn-danger btn-sm delete">
+    //                                             <i class="tio-add-to-trash"></i>
+    //                                             delete
+    //                             </button>'.'</td>'.
+    //                     '</tr>';
+    //             }
+    //             return Response($output);
+    //         }
+    //     }
+    // }
 
 
 
