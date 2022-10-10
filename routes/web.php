@@ -22,6 +22,8 @@ use App\Http\Controllers\CustomerController;
 //     return view('layouts.index');
 //     // return view('layouts.back-end.partials.agent.agent_view');
 // });
+
+
 Route::get('/', [AgentController::class, 'index'])->name('dashboard');
 
 Route::get('/agent_list',[AgentController::class,'agentViewPage'])->name('agent_list');
@@ -31,8 +33,9 @@ Route::prefix('agent')->group(function () {
     Route::get('/edit/{agent_id}',[AgentController::class,'edit'])->name('customer.edit');
     Route::post('/update/{agent_id}',[AgentController::class,'update']);
     Route::get('/remove/{agent_id}',[AgentController::class,'removeAgent']);
-
 });
+Route::put('/agent-update-status/{id}',[AgentController::class,'statusUpdate']);
+
 
 /// Bank
 Route::get('/bank-list',[BankController::class, 'index'])->name('bank.list');
@@ -45,3 +48,4 @@ Route::get('/data-search',[BankController::class, 'search'])->name('data.search'
 
 // Customer
 Route::get('/customer-list',[CustomerController::class, 'index'])->name('all.customer');
+

@@ -13,6 +13,7 @@ php artisan serve
     Agent -Page
 @endsection
 
+
 @section('content')
     <div class="content-wrapper" id="app">
         <div class="container-fluid">
@@ -93,7 +94,7 @@ php artisan serve
 
                                             <td>
                                                 <label class="switch switch-status">
-                                                    <input type="checkbox" class="status" id="31" checked="">
+                                                    <input type="checkbox" v-model="item.status == 1 ? 'checked': '' " class="status" id="31" @click.preven="statusUpdate(item.id)">
                                                     <span class="slider round"></span>
                                                 </label>
                                             </td>
@@ -432,6 +433,7 @@ php artisan serve
                         banking_mobile_number: "",
                         email: "",
                         password: "",
+                        status: ""
 
                     }
                 },
@@ -460,8 +462,7 @@ php artisan serve
                             formData.append(key, value);
                         });
 
-                        axios
-                            .post("/agent/store_agent_data/",formData )
+                        axios.post("/agent/store_agent_data/",formData )
                             .then(() => {
                                 Swal.fire({
                                     position: 'top-end',
@@ -502,6 +503,7 @@ php artisan serve
                                 this.form.name = agent.name;
                                 this.form.email = agent.email;
                                 this.form.password = agent.password;
+                                this.form.status = agent.status;
                             });
                     },
                                  updateAgent(agent_id){
@@ -585,8 +587,24 @@ php artisan serve
 
                     //   },
 
-
+                    statusUpdate  (id) {
+                        axios.put(`/agent-update-status/${id}`)
+                            .then(() => {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Status Updated Successfully',
+                                    showConfirmButton: false,
+                                    timer: 3500
+                                })
+                                this.view();
+                            })
+                            .catch((error) => (this.errors.push = error.response.data.errors));
+                    },
                 },
+
+
+
                 mounted() {
                     this.view();
                 }

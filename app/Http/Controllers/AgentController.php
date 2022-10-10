@@ -198,4 +198,21 @@ class AgentController extends Controller
             'message' => "Agent data updated successfully!"
         ]);
       }
+
+      public function statusUpdate(Request $request, $id){
+
+
+//          $Agent = Agent::find($id);
+//          if(!$Agent){
+//              return response()->json(['error'=>"Agent not found"]);
+//          }
+
+          if ('status'== 1){
+              $data= Agent::findOrFail($id)->update(['status' => 1,]);
+          }else{
+              $data= Agent::findOrFail($id)->update(['status' => 1,]);
+          }
+
+          return response()->json($data);
+      }
 }
