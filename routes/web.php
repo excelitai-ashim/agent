@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\CustomerController;
 
 
 /*
@@ -41,3 +42,6 @@ Route::delete('/bank-details-delete/{id}',[BankController::class, 'destroy'])->n
 Route::get('/bank-details-edit/{id}',[BankController::class, 'edit'])->name('bank.details.edit');
 Route::put('/bank-details-update/{id}',[BankController::class, 'update'])->name('bank.details.update');
 Route::get('/data-search',[BankController::class, 'search'])->name('data.search');
+
+// Customer
+Route::get('/customer-list',[CustomerController::class, 'index'])->name('all.customer');
