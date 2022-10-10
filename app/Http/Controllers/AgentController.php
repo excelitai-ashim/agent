@@ -111,7 +111,7 @@ class AgentController extends Controller
     
         $PaymentDetails=PaymentDetails::create([
             'agent_id' =>$Agent->id,
-            'bank_id' => $request->bank_id,
+            'bank_id' => $request->bank_name,
             'account_number' => $request->account_number,
             'Mobile_banking' => $request->Mobile_banking,
             'banking_mobile_number' => $request->banking_mobile_number,
