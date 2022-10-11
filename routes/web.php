@@ -48,4 +48,5 @@ Route::get('/data-search',[BankController::class, 'search'])->name('data.search'
 
 // Customer
 Route::get('/customer-list',[CustomerController::class, 'index'])->name('all.customer');
+Route::get('/customer',[CustomerController::class, 'create'])->name('customer');
 

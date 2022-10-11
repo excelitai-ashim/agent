@@ -199,20 +199,37 @@ class AgentController extends Controller
         ]);
       }
 
-      public function statusUpdate(Request $request, $id){
+      public function statusUpdate( $id){
 
+          if ('status' == 1){
+              $data = Agent::findOrFail($id)->update(['status' => 0]);
+
+          }elseif('status' == 0){
+              $data= Agent::findOrFail($id)->update(['status' => 1]);
+          }
+
+
+
+//        dd($id);
 
 //          $Agent = Agent::find($id);
 //          if(!$Agent){
 //              return response()->json(['error'=>"Agent not found"]);
 //          }
 
-          if ('status'== 1){
-              $data= Agent::findOrFail($id)->update(['status' => 1,]);
-          }else{
-              $data= Agent::findOrFail($id)->update(['status' => 1,]);
-          }
 
-          return response()->json($data);
+//          if (!$request->has('status')):
+//              $request['status'] = 0;
+//          endif;
+
+
+
+//          return response()->json($data);
+
+
+//          $data = Agent::find($request->id);
+//          $data->status = $request->status;
+//          $data->save();
+
       }
 }
